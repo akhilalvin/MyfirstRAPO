@@ -1,0 +1,1272 @@
+package intro;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Demo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("http://google.com"); // For url on the browser
+		
+		System.out.println(driver.getTitle()); // Validate if your page title is correct
+		
+		System.out.println(driver.getCurrentUrl()); // validate if you are landed on correct url
+		
+		// System.out.println(driver.getPageSource()); // for to print page source
+		
+		
+		driver.navigate().to("http://yahoo.com"); // or driver.get("http://yahoo.com"); 
+		driver.navigate().back();
+		//driver.navigate().forward();
+		driver.close(); // it closes current browser or window
+		//driver.quit(); // it closes all the browsers and quit the driver opened by selenium script
+	}
+
+}
+
+
+
+HANDLING STATIC DROPDOWNS
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;                                         //for chrome
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;                               //for chrome
+import org.openqa.selenium.support.ui.Select;
+
+public class Automation {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe");                    // for chrome
+		WebDriver driver=new ChromeDriver();                                                      // for chrome
+
+		driver.get("https://rahulshettyacademy.com/dropdownsPractise/");                          // to load the page
+		WebElement staticDropdown = driver.findElement(By.id("ctl00_mainContent_DropDownListCurrency"));         // created value as staticDropdown and saved the webElement and should go into the class now
+		Select drop = new Select(staticDropdown);
+
+		drop.selectByIndex(2);
+		System.out.println(drop.getFirstSelectedOption().getText());
+                                (or)
+		drop.selectByVisibleText("USD");
+		System.out.println(drop.getFirstSelectedOption().getText());
+                                (or)
+		drop.selectByValue("INR");
+		System.out.println(drop.getFirstSelectedOption().getText());
+	}
+
+}
+ 
+DROPDOWNS code for selecting adults,childrens etc..,
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class dropdownselecting {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver(); 
+		driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
+		
+		driver.findElement(By.id("divpaxinfo")).click();            //passengers
+		   Thread.sleep(2000L);
+	    
+		   System.out.println(driver.findElement(By.id("divpaxinfo")).getText());
+/*for(int i=1;i<5;i++)
+{
+	driver.findElement(By.id("hrefIncAdt")).click(); 
+}
+*/
+		   
+int i=1;
+while(i<5)
+{
+	driver.findElement(By.id("hrefIncAdt")).click();
+	i++;
+}
+	driver.findElement(By.id("btnclosepaxoption")).click(); 
+ 
+	System.out.println(driver.findElement(By.id("divpaxinfo")).getText());
+
+	} 
+	
+}
+
+DYNAMIC DROPDOWN with indexes
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Dynamicdropdown {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+	driver.get("https://www.spicejet.com/");	
+	driver.findElement(By.xpath("//input[@name='ctl00_mainContent_ddl_originStation1_CTXT']")).click();
+	driver.findElement(By.xpath("//a[@text='Amritsar (ATQ)']")).click();
+	Thread.sleep(2000L);
+	driver.findElement(By.xpath("(//a[@value='HYD'])[2]")).click(); // to get right option we used index number like [2] when we have same options to get right one we use index numbers
+		
+	
+	}
+}
+
+
+Parent child relationship locator in dynamic dropdown
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Dynamicdropdown {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+	driver.get("https://www.spicejet.com/");	
+	driver.findElement(By.xpath("//input[@name='ctl00_mainContent_ddl_originStation1_CTXT']")).click();
+	driver.findElement(By.xpath("//a[@text='Amritsar (ATQ)']")).click();
+	Thread.sleep(2000L);
+	driver.findElement(By.xpath("(//a[@value='HYD'])[2]")).click();
+		
+	
+	}
+}
+//td[@class='mapbg'] by parent xpath or  (//a[@value='HYD'])[2]") by index number
+
+
+AUTOSUGGESTIVE CODE DOWNLOAD:
+
+package intro;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+
+
+public class autosuggestivedd {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
+		
+		driver.findElement(By.id("autosuggest")).sendKeys("ind");
+		Thread.sleep(2000L);
+		
+		 List<WebElement> options=driver.findElements(By.cssSelector("li[class='ui-menu-item'] a")); // variable is options
+		 
+		 for(WebElement option :options) //IN options get me one option
+		 {
+			 if(option.getText().equalsIgnoreCase("India")) //returntype for that option is the one webelement
+					 {
+				 option.click();
+				 break;
+					 }
+		 }
+		 
+		 
+		
+	}
+
+CLICKING CHECKBOXES AND THERE SIZE(COUNT OF BOXES)
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class checkboxsize {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://www.spicejet.com/");
+		
+		System.out.println(driver.findElement(By.cssSelector("input[id*='friendsandfamily']")).isSelected()); //False
+		
+		driver.findElement(By.cssSelector("input[id*='friendsandfamily']")).click();
+		System.out.println(driver.findElement(By.cssSelector("input[id*='friendsandfamily']")).isSelected()); //True
+		//to check it is selected or not if selected it prints true or false
+		
+		System.out.println(driver.findElements(By.xpath("//input[@type='checkbox']")).size()); // it gives count of check boxes
+		
+		driver.navigate().to("https://www.spicejet.com/covid19.aspx#airportguide"); 
+		driver.findElement(By.cssSelector("a[href*='CoronaVirusTravelRestrictions']")).click();
+		driver.navigate().back();
+		
+		
+	}
+
+}
+
+
+ASSERTIONS USING TestNG FRAMEWORK
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+
+public class Assertionstestng {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://www.spicejet.com/");
+		
+		Assert.assertFalse(driver.findElement(By.cssSelector("input[id*='friendsandfamily']")).isSelected());
+		//System.out.println(driver.findElement(By.cssSelector("input[id*='friendsandfamily']")).isSelected()); //False
+		
+		driver.findElement(By.cssSelector("input[id*='friendsandfamily']")).click();
+		
+		//System.out.println(driver.findElement(By.cssSelector("input[id*='friendsandfamily']")).isSelected()); //True
+		//to check it is selected or not if selected it prints true or false
+		
+		Assert.assertTrue(driver.findElement(By.cssSelector("input[id*='friendsandfamily']")).isSelected());
+		
+		System.out.println(driver.findElements(By.xpath("//input[@type='checkbox']")).size());
+      
+        }
+}
+
+
+HANDLING JAVA ALERTS
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class javaalerts {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		String text="akhil";
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver(); 
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+		
+		driver.findElement(By.id("name")).sendKeys(text);
+		driver.findElement(By.id("alertbtn")).click();
+		
+		System.out.println(driver.switchTo().alert().getText());		
+		driver.switchTo().alert().accept();
+		
+		driver.findElement(By.id("confirmbtn")).click();
+		System.out.println(driver.switchTo().alert().getText());
+		driver.switchTo().alert().dismiss();
+		
+		
+	}
+
+}
+
+
+ADDING TO CART AND IMPLICIT AND EXPLICIT WITH WEBDRIVERWAIT CLASS
+
+import java.util.Arrays;
+
+import java.util.List;
+
+import java.util.concurrent.TimeUnit;
+
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class base {
+public static void main(String[] args) throws InterruptedException {
+
+// TODO Auto-generated method stub
+System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe");
+
+WebDriver driver=new ChromeDriver();
+//driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // FOR IMPLICIT
+
+WebDriverWait w=new WebDriverWait(driver,5); //deriving WebDriverWait class and creating object for Explicit
+
+
+
+String[] itemsNeeded= {"Cucumber","Brocolli","Beetroot"};
+
+driver.get("https://rahulshettyacademy.com/seleniumPractise/");
+Thread.sleep(3000);
+
+
+addItems(driver,itemsNeeded);  // if we make the method static(L55) then we can directly call or access that method without creating object for the main class 
+//additems are called as utilitiemms 
+/*base b=new base();
+b.addItems(driver, itemsNeeded);*/ //if we dont use static in the method then we need create an object for the main class and then we need to call the method using the object
+
+driver.findElement(By.xpath("//img[@alt='Cart']")).click();
+driver.findElement(By.xpath("//button[text()='PROCEED TO CHECKOUT']")).click();
+w.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input.promoCode")));
+driver.findElement(By.cssSelector("input.promoCode")).sendKeys("rahulshettyacademy");
+driver.findElement(By.cssSelector("button.promoBtn")).click();
+
+//WebDriverWait w=new WebDriverWait(driver,5); we can also use here or can use in globally
+w.until(ExpectedConditions.visibilityOfElementLocated(By.className("promoInfo")));
+System.out.println(driver.findElement(By.className("promoInfo")).getText());
+
+
+
+}
+
+public static void addItems(WebDriver driver,String[] itemsNeeded)
+
+{
+
+int j=0;
+
+List<WebElement> products=driver.findElements(By.cssSelector("h4.product-name"));
+
+for(int i=0;i<products.size();i++)
+
+{
+
+//Brocolli - 1 Kg
+
+//Brocolli,    1 kg
+
+String[] name=products.get(i).getText().split("-");
+
+String formattedName=name[0].trim();
+
+//format it to get actual vegetable name
+
+//convert array into array list for easy search
+
+//  check whether name you extracted is present in arrayList or not-
+
+List itemsNeededList = Arrays.asList(itemsNeeded);
+
+if(itemsNeededList.contains(formattedName))
+
+{
+
+j++;
+
+//click on Add to cart
+
+driver.findElements(By.xpath("//div[@class='product-action']/button")).get(i).click();
+
+if(j==itemsNeeded.length)
+
+{
+
+break;
+
+}
+
+}
+
+}
+
+}
+
+
+
+}
+
+EXplicit example WebDriverWait class
+
+package intro;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class Assignmentexplicit {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		WebDriverWait w=new WebDriverWait(driver,5);
+		driver.get("https://the-internet.herokuapp.com/dynamic_loading/1");
+		
+		//w.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//a[text()='Click to load get data via Ajax!']")));
+		driver.findElement(By.cssSelector("div[id='start'] button")).click();;
+		//System.out.println(driver.findElement(By.xpath("//a[text()='Click to load get data via Ajax!']")).getText());
+		w.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("div[id='finish'] h4")));
+		System.out.println(driver.findElement(By.cssSelector("div[id='finish'] h4")).getText());
+	}
+
+}
+ACTIONS DEMO - MOUSE OVER ACTION
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class Actionsdemo {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		
+		driver.manage().window().maximize();
+		//to maximize the window
+		driver.get("https://www.amazon.com/");
+		
+		
+		Actions a=new Actions(driver);
+		//derived actions class from selenium
+		WebElement move=driver.findElement(By.cssSelector("a#nav-link-accountList"));
+		WebElement move1=driver.findElement(By.id("twotabsearchtextbox"));
+		
+		a.moveToElement(move1).click().keyDown(Keys.SHIFT).sendKeys("hello").doubleClick().build().perform();
+		/*to enter capital letters using mouse over action keydown (we can also use click and hold method) method 
+		will use to press shift key for capital letters and doubleclick select all the enterd text in the box*/
+		
+		a.moveToElement(move).contextClick().build().perform(); 
+		//-mouse moves specific element and moved the webelement into a webelement class by creating a variable in L14
+		// ContextClick will helps to rightclick on the element
+		
+	}
+
+}
+
+
+PARENT TO CHILD WEBPAGE AND SPLIT THE TEXT AND TRIMMING IT 
+
+package intro;
+
+import java.util.Iterator;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Exp {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+	
+
+		driver.get("https://rahulshettyacademy.com/loginpagePractise/#");
+
+		driver.findElement(By.cssSelector(".blinkingText")).click();
+
+		Set<String> windows = driver.getWindowHandles(); //[parentid,childid,subchildId]
+
+		Iterator<String>it = windows.iterator();
+
+		String parentId = it.next();
+
+		String childId = it.next();
+
+		driver.switchTo().window(childId);
+
+		System.out.println(driver.findElement(By.cssSelector(".im-para.red")).getText());
+
+		driver.findElement(By.cssSelector(".im-para.red")).getText();
+
+		String emailId= driver.findElement(By.cssSelector(".im-para.red")).getText().split("at")[1].trim().split(" ")[0];
+
+		driver.switchTo().window(parentId);
+
+		driver.findElement(By.id("username")).sendKeys(emailId);
+
+		}
+
+
+
+		
+	}
+
+
+FRAMES using DRAG and DROP using ACTIONS class
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class Frameswithdragdrop {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+
+		
+		driver.get("https://jqueryui.com/droppable/");
+		System.out.println(driver.findElements(By.tagName("iframe")).size());
+		//the iframe webelement is used to get the count of frames in the page
+		
+		driver.switchTo().frame(0);
+		//the frame can be identified by using index number as well
+		
+		//driver.switchTo().frame(driver.findElement(By.cssSelector("iframe[class='demo-frame']")));
+		//the webelement was the parent frame and the frames are identified using web elements
+		
+		driver.findElement(By.xpath("//div[@id='draggable']")).click();
+		//the exact frame webelement
+		
+		Actions a=new Actions(driver);
+		// actions class is used for to perform drag and drop 
+		WebElement source=driver.findElement(By.xpath("//div[@id='draggable']"));
+		// this was drag webelement which is a source
+		WebElement destination=driver.findElement(By.cssSelector("div[id='droppable']"));
+		// this was drop webelement which is a target
+		
+		//here the webelement is a class used to derive the webelement by storing in a varaible
+		a.dragAndDrop(source, destination).build().perform();
+		
+		driver.switchTo().defaultContent();
+		// this will helps to come out of frame (switch to normal content)
+		
+		driver.findElement(By.xpath("//a[text()='Accept']")).click();
+	}
+
+}
+
+SCOPE LIKE LIMITTING WEBDRIVER SCOPE AND GET LINKS FROM THE COLOUMN AND CLICKING THEM INTO NEW TABS AND GETTING THERE TITLE NAMES AND FINDING LINKS IN THE PAGE AND IN PARTICULAR SECTION
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Scope {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+		
+	    System.out.println(driver.findElements(By.tagName("a")).size());
+	    //printing the links count for the page using anchor tag "a".
+	    
+		      /*String url = "https://www.rahulshettyacademy.com/AutomationPractice/";
+		      driver.get(url);
+		      driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
+		      Using tagname with anchor
+		     
+		      List<WebElement> links = driver.findElements(By.tagName("a"));
+		      System.out.println(driver.findElements(By.tagName("a")).size());
+		      System.out.println("The number of links is" + links.size());
+		      driver.close();*/
+		   
+		//CODE LIMITING WEBDRIVER SCOPE FOR FOOTER SECTIONS OR FOR ANY SECTIONS 
+	    WebElement websitefooter=driver.findElement(By.id("gf-BIG"));
+	    System.out.println(websitefooter.findElements(By.tagName("a")).size());
+	    
+	    //GETTING LINKS ONLY IN ONE COLOUMN IN THE FOOTER SECTION
+	    WebElement coloumndriver=websitefooter.findElement(By.xpath("//table/tbody/tr/td[1]/ul"));
+	    List<WebElement> links=coloumndriver.findElements(By.tagName("a"));
+	    System.out.println("No.of Links" + links.size());
+	    
+	    //CLICK ON EACHLINK IN THE COLOUMN AND CHECK IF THE PAGES ARE OPENING
+	    
+	    for(int i=1;i<links.size();i++)
+	    	
+	    {
+	    	String clickonnewtab=Keys.chord(Keys.CONTROL,Keys.ENTER); // adding this to a string variable
+	    	// to get the links open in newtabs instead opening in a single page coming back and again clicking
+	        links.get(i).sendKeys(clickonnewtab);
+	    }
+	        //to get title names of all the windows that are opened
+	        Set<String>abc=driver.getWindowHandles();
+	        Iterator<String> it=abc.iterator();
+	        
+	        while(it.hasNext())
+	        {
+	        	driver.switchTo().window(it.next());
+	        	System.out.println(driver.getTitle());
+	        }
+	    
+		
+	   }
+	
+}
+
+
+SCROLLING WITHIN THE TABLE AND SELECTING THE COLOUMN AND ADDING THE VALUES
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+
+public class Scrollingwithintable {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+		
+		JavascriptExecutor js= (JavascriptExecutor)driver;
+		// this is used for java scripts were JavascriptExecutor is a class 
+		
+		js.executeScript("window.scrollBy(0,500)"); // on window level
+		//this method will help jasvascript to scroll
+		Thread.sleep(3000);
+		js.executeScript("document.querySelector(\".tableFixHead\").scrollTop=5000");// on tabel level
+		//this method will help to scroll inside the table
+		
+		List<WebElement> values=driver.findElements(By.cssSelector(".tableFixHead td:nth-child(4)"));
+		// to find webelement in the table of 4th coloumn by using css
+		// by xpath the code is //div[@class='tableFixHead'] //td[4] parent and child
+		int Sum=0;
+		for(int i=0;i<values.size();i++)
+		{
+			Sum=Sum+Integer.parseInt(values.get(i).getText());
+			//Integer.parseInt(string) this method helps to covert the string formate to integer
+		}
+			System.out.println(Sum);
+			driver.findElement(By.xpath("//div[@class='totalAmount']")).getText();
+			int total =Integer.parseInt(driver.findElement(By.xpath("//div[@class='totalAmount']")).getText().split(":")[1].trim());
+			// getting the total number by spliting it and converting the string command(get Text()) to int 
+			
+			Assert.assertEquals(Sum, total); 
+			// checking whether the sum and total variable are equal or not by using assertions
+	}
+
+}
+
+TABLE COUNTING ROWS AND COLOUMNS PRINTING THE TEXT IN THE COLOUMN
+
+package practise2;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Pp1 {
+     
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+		WebElement table=driver.findElement(By.xpath("//table[@name='courses']"));
+		
+		System.out.println(table.findElements(By.tagName("tr")).size());
+		System.out.println(table.findElements(By.tagName("tr")).get(0).findElements(By.tagName("th")).size());
+		List<WebElement> secondrow=table.findElements(By.tagName("tr")).get(2).findElements(By.tagName("td"));
+		
+		System.out.println(secondrow.get(0).getText());
+		System.out.println(secondrow.get(1).getText());
+		System.out.println(secondrow.get(2).getText());
+		
+		
+	}
+
+}
+
+TO GET AUTOMATED GENERATED CODE 
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class Assignment {
+public static void main(String[] args) throws InterruptedException {
+
+System.setProperty("webdriver.chrome.driver", "C://work//chromedriver.exe");
+    WebDriver driver = new ChromeDriver();
+
+    driver.get("http://qaclickacademy.com/practice.php");
+
+    driver.findElement(By.id("autocomplete")).sendKeys("ind");
+
+    Thread.sleep(2000);
+
+    driver.findElement(By.id("autocomplete")).sendKeys(Keys.DOWN);
+
+    driver.findElement(By.id("autocomplete")).sendKeys(Keys.DOWN);
+
+   System.out.println(driver.findElement(By.id("autocomplete")).getAttribute("value")); 
+
+}
+
+}
+
+
+HTTPS CERTIFICATIONS to accept insecure certi(webpages) or ssl certificates 
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+public class HTTPScertifications {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		/*SSl certificates in case to accept insecure certi(webpages) or ssl certificates we need to 
+		set a profile with desired capabailities(class with object ch) which are a general chrome profile*/
+		DesiredCapabilities ch=DesiredCapabilities.chrome();
+		ch.acceptInsecureCerts();
+		
+		ch.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+		ch.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+		
+		//merging the above capabilities with the local browser
+		ChromeOptions c=new ChromeOptions();
+		c.merge(ch);
+		
+		System.setProperty("webDriver.chrome.driver", "C://chromedriver.exe");
+		WebDriver driver=new ChromeDriver(c);
+		
+		
+		
+		
+	
+		
+	}
+
+}
+
+
+MAXIMIZE the window, DELETING all COOKIES or COOKIE with a NAME AND taking SCREENSHOTS AND SAVING IN THE LOCAL FOLDER
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Miscelleanous {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		
+		//driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+		
+		//maximize or minimize the window, deleting all cookies or cookie with a name 
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		//driver.manage().deleteCookieNamed("sessionkey");
+		//by selecting a cookie name we can delete it then go to the link freshly
+		driver.get("http://google.com");
+		
+		
+		//taking SCREENSHOTS in selenium by changing the behaviour of the driver with a method TakesScreenshot
+		
+		File src= ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		/*Teling driver to take screenshot by using method getScreenAs and 
+		passing parameter as OutputType get it in File Format*/
+		FileUtils.copyFile(src,new File("E:\\screenshot.png"));
+		//fileutils to copy the file from source object to localmachine or local folder
+		//for fileutils we need to download the jars from Apache commons io website then set feild path
+		
+		
+	}
+
+}
+
+BROKEN LINKS or BROKEN URL'S
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Brokenlinks {
+
+	public static void main(String[] args) throws MalformedURLException, IOException {
+		// TODO Auto-generated method stub
+
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+		// BROKEN links which means when we click link if the url is not working then it has a problem 
+		// the following code is to find the broken URL
+		//step1- is to get all URL's tied up to the links using selenium
+		//step2- using some JAVA methods which will help to call URL's and gets the status code
+		//if status code >400 then that URL is not working-> link which tied to URL BROKEN(EX:404)
+		
+		String url=driver.findElement(By.cssSelector("a[href*='brokenlink']")).getAttribute("href");
+		
+		HttpURLConnection conn = (HttpURLConnection)new URL(url).openConnection();
+		//there is already a predefined class called URL which exposes this openconnection in java 
+		/*the above code explains that we are calling the openconnection method that contains in URL class which has 
+		 * a return type as URL conncetion and we are casting that with HTTP*/
+		 
+		conn.setRequestMethod("HEAD");
+		//calling that URL HEAD request method
+		conn.connect();
+		//this method will connects to the link it is the same thing like how you click the link it open same way
+		int respcode=conn.getResponseCode();
+		//based upon the code status we can know that the link is broken or not >400
+		System.out.println(respcode);
+	}
+
+}
+
+BROKEN LINKS MECHANISAM USING ASSERTIONS getting all the links and continuing all code even after getting the broken link 
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+
+
+public class Brokenlinks {
+
+	public static void main(String[] args) throws MalformedURLException, IOException {
+		// TODO Auto-generated method stub
+
+		System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe"); // for chrome
+		WebDriver driver=new ChromeDriver();
+		
+		//driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+		
+        //broken URL
+
+        //Step 1 - IS to get all urls tied up to the links using Selenium
+
+        //  Java methods will call URL's and gets you the status code
+
+        //if status code >400 then that url is not working-> link which tied to url is broken
+
+        //a[href*="soapui"]'
+
+        driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+
+     List<WebElement> links=   driver.findElements(By.cssSelector("li[class='gf-li'] a"));
+     SoftAssert a =new SoftAssert();
+     for(WebElement link : links)
+
+     {
+         String url= link.getAttribute("href");
+         HttpURLConnection   conn= (HttpURLConnection)new URL(url).openConnection();
+
+         conn.setRequestMethod("HEAD");
+
+         conn.connect();
+
+         int respCode = conn.getResponseCode();
+
+         System.out.println(respCode);
+
+         a.assertTrue(respCode<400, "The link with Text"+link.getText()+" is broken with code" +respCode);
+     }
+     a.assertAll();
+	
+}
+
+STREAMS FOR LIST OF ELEMENTS
+
+import java.util.List;
+
+import java.util.stream.Collectors;
+
+
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.testng.Assert;
+
+
+
+public class LiveDemo {
+
+
+
+public static void main(String[] args) throws InterruptedException {
+
+// TODO Auto-generated method stub
+
+System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe");
+
+WebDriver driver = new ChromeDriver();
+
+driver.get("https://rahulshettyacademy.com/greenkart/#/offers");
+
+// click on column
+
+driver.findElement(By.xpath("//tr/th[1]")).click();
+
+
+
+// capture all webelements into list
+
+List<WebElement> elementsList = driver.findElements(By.xpath("//tr/td[1]"));
+
+
+
+// capture text of all webelements into new(original) list
+
+List<String> originalList = elementsList.stream().map(s -> s.getText()).collect(Collectors.toList());
+
+
+
+// sort on the original list of step 3 -> sorted list
+
+
+
+List<String> sortedList = originalList.stream().sorted().collect(Collectors.toList());
+
+// compare original list vs sorted list
+
+Assert.assertTrue(originalList.equals(sortedList));
+
+List<String> price;
+
+// scan the name column with getText ->Beans->print the price of the Rice
+
+do
+
+{
+
+List<WebElement> rows = driver.findElements(By.xpath("//tr/td[1]"));
+
+price = rows.stream().filter(s -> s.getText().contains("Rice"))
+
+.map(s -> getPriceVeggie(s)).collect(Collectors.toList());
+
+price.forEach(a -> System.out.println(a));
+
+if(price.size()<1)
+
+{
+
+driver.findElement(By.cssSelector("[aria-label='Next']")).click();
+
+}
+
+}while(price.size()<1);
+
+
+
+}
+
+
+
+private static String getPriceVeggie(WebElement s) {
+
+// TODO Auto-generated method stub
+
+String pricevalue = s.findElement(By.xpath("following-sibling::td[1]")).getText();
+return pricevalue;
+
+}
+
+}
+
+
+STREAMS TO FIND THE ELEMENT THAT IS EQUAL IN THE LIST TYPED IN BOX IS EQUAL TO THE RESULT DOWN
+import java.util.List;
+
+import java.util.stream.Collectors;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+
+public class filter {
+
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe");
+        WebDriver driver=new ChromeDriver();
+        driver.get("https://rahulshettyacademy.com/greenkart/#/offers");
+        driver.findElement(By.id("search-field")).sendKeys("Rice");
+        List<WebElement> veggies=driver.findElements(By.xpath("//tr/td[1]"));
+        //1 results
+       List<WebElement> filteredList= veggies.stream().filter(veggie->veggie.getText().contains("Rice")).
+        collect(Collectors.toList());
+       //1 result
+       Assert.assertEquals(veggies.size(), filteredList.size());
+
+   }
+
+}
+
+
+SELENIUM GRID HANDLING TEST CASES REMOTELY
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+public class remotetest {
+
+public static void main(String[] args) throws MalformedURLException {
+// TODO Auto-generated method stub
+//Automated- chrome,firefox,ie,safari
+
+DesiredCapabilities dc= new DesiredCapabilities();
+dc.setBrowserName("chrome");
+dc.setPlatform(Platform.WINDOWS);
+//dc.se
+
+//Webdriver driver=new ChromeDriver();
+WebDriver driver= new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),dc);
+driver.get("http://rediff.com");
+ 
+}
+
+}
+
+
+SELENIUM RELATIVE LOCATORS SUPPORTED FROM 4.0 VERSION OF JAVA IN SELENIUM DEV.DOWNLOADS
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import static org.openqa.selenium.support.locators.RelativeLocator.withTagName;
+
+public class RelativeLoc {
+public static void main(String[] args) {
+
+// TODO Auto-generated method stub
+
+System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe");
+WebDriver driver=new ChromeDriver();
+driver.get("https://rahulshettyacademy.com/angularpractice/");
+
+WebElement nameEditBox =driver.findElement(By.cssSelector("[name='name']"));
+System.out.println(driver.findElement(withTagName("label").above(nameEditBox)).getText());
+
+WebElement dateofBirth= driver.findElement(By.cssSelector("[for='dateofBirth']"));
+driver.findElement(withTagName("input").below(dateofBirth)).sendKeys("02/02/1992");
+
+WebElement iceCreamLabel=driver.findElement(By.xpath("//label[text()='Check me out if you Love IceCreams!']"));
+driver.findElement(withTagName("input").toLeftOf(iceCreamLabel)).click();
+
+//Get me the label of first Radio button
+WebElement rb=driver.findElement(By.id("inlineRadio1"));
+System.out.println(driver.findElement(withTagName("label").toRightOf(rb)).getText());
+
+}
+
+}
+
+
+SWITCHINGWINDOWS, SCREENSHOTS AND SAVING FILE, HEIGHT AND WIDTH
+
+But fe errors are there because we need to import latest selenium java jars which will work after the 4.0 versions only
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class NewWindow {
+public static void main(String[] args) throws IOException {
+
+// TODO Auto-generated method stub
+System.setProperty("webdriver.chrome.driver", "C://chromedriver.exe");
+WebDriver driver=new ChromeDriver();
+
+driver.get("https://rahulshettyacademy.com/angularpractice/");
+
+//Switching Window
+
+driver.switchTo().newWindow(WindowType.WINDOW);
+Set<String> handles=driver.getWindowHandles();
+Iterator<String> it=handles.iterator();
+String parentWindowId = it.next();
+String childWindow =it.next();
+
+driver.switchTo().window(childWindow);
+
+driver.get("https://rahulshettyacademy.com/");
+
+String courseName = driver.findElements(By.cssSelector("a[href*='https://courses.rahulshettyacademy.com/p']"))
+.get(1).getText();
+driver.switchTo().window(parentWindowId);
+WebElement name=driver.findElement(By.cssSelector("[name='name']"));
+name.sendKeys(courseName);
+
+//Screenshot
+
+File file=name.getScreenshotAs(OutputType.FILE);
+FileUtils.copyFile(file, new File("logo.png"));
+//driver.quit();
+//GEt Height & Width
+System.out.println(name.getRect().getDimension().getHeight());
+System.out.println(name.getRect().getDimension().getWidth());
+
+}
+
+}
+
+
+converted xml code for testng tests
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+
+  <test thread-count="5" name="Testbank">
+    <classes>
+      <class name="test.day1">
+      <methods>
+      	<include name="test2"/>
+      </methods>
+      </class>
+      <class name="test.day2"/>
+     </classes>
+  </test>
+  
+  <test name="car loan">
+  	<classes>
+	<class name="test.Day4"/>
+      <class name="test.Day3">
+      	<methods>
+      		<exclude name="MobileLogincarloan"/>
+      	</methods>
+      	</class>
+    </classes>
+  </test>
+  
+</suite> 
+
+
+
+------------------TestNG------------------
+
+
+------------------JAVA(OOPS)----------------
+String Code Download
+package coreJavaTraining;
+
+public class secondclass {
+public void setData()
+{
+System.out.println(" I am in second class method");
+}
+package coreJavaTraining;
+
+public class stringclassdemo {
+
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+
+//String : it is one of the prebuilt class in java
+/* 1.String literal
+2.by creating object of string*/
+
+String a= " javatraining";//string 
+
+System.out.println(a.charAt(2));
+System.out.println(a.indexOf("e"));
+System.out.println(a.substring(3, 6));
+System.out.println(a.substring(5));
+System.out.println(a.concat("rahul teaches"));
+//a.length()
+System.out.println(a.trim());
+a.toUpperCase();
+a.toLowerCase();
+//split
+String arr[]=a.split("t");
+System.out.println(arr[0]);
+System.out.println(arr[1]);
+System.out.println(a.replace("t", "s"));
+
+}
+
+}
+
+
+	
